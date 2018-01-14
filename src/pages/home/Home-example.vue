@@ -1,5 +1,6 @@
 <template>
     <div class="app-container">
+        <bind-mobile></bind-mobile>
         <banner v-bind:banner-metas="meta.bannerMetas" v-bind:corp-id="corpId"></banner>
         <item v-bind:item-metas="meta.itemMetas" v-bind:corp-id="corpId"></item>
         <admin v-bind:admin="meta.admin" v-bind:user-info="meta.userInfo" v-bind:corp-id="corpId"></admin>
@@ -21,16 +22,12 @@
     import { OPENAPIHOST } from '../../lib/env.js';
     import dingWISDK from '../../lib/ding-web.js';
 
-    import banner from './components/index-banner.vue';
-    import applist from './components/index-applist.vue';
-    import item from './components/index-item.vue';
-    import admin from './components/index-admin.vue';
-    import userlist from './components/index-userlist.vue';
-    import appmanager from './components/index-appManager.vue';
+    import bindMobile from '../../components/bind-mobile.vue';
 
     export default {
         name: 'home',
         components: {
+            'bind-mobile': bindMobile,
             banner: banner,
             applist: applist,
             item: item,
