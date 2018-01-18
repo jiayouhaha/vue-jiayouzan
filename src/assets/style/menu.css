@@ -57,9 +57,7 @@
 .menu-tabs li a span.car-icon {
     background-image: url(../menu/car.png);
 }
-.menu-tabs li a span.activity-icon {
-    background-image: url(../menu/activity.png);
-}
+
 .menu-tabs li a span.my-icon {
     background-image: url(../menu/my.png);
 }
@@ -67,27 +65,21 @@
     font-size: 12px;
     color: #8a8a8a;
 }
-.menu-tabs li a label.selected {
+.menu-tabs li a.selected label{
     color: #eb4452;
 }
 .menu-tabs li:active {
     background-color: #f3f1f1;
 }
-.menu-tabs li.selected span.home-icon {
+.menu-tabs li a.selected span.home-icon {
     background-image: url(../menu/home@selected.png);
 }
-.menu-tabs li.selected span.gas-icon {
+.menu-tabs li a.selected span.gas-icon {
     background-image: url(../menu/gas@selected.png);
 }
-.menu-tabs li.selected span.car-icon {
+.menu-tabs li a.selected span.car-icon {
     background-image: url(../menu/car@selected.png);
 }
-.menu-tabs li.selected span.activity-icon {
-    background-image: url(../menu/activity@selected.png);
-}
-.menu-tabs li.selected span.my-icon {
+.menu-tabs li a.selected span.my-icon {
     background-image: url(../menu/my@selected.png);
-}
-.menu-tabs li.selected label {
-    color: #eb4452;
 }

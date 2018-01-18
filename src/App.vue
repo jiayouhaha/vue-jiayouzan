@@ -2,42 +2,14 @@
   <div id="app-container">
     <div id="menu-wrapper">
       <ul class="menu-tabs">
-
         <li class="tab-item"
             v-for="(item,index) in items"
-            :class="{selected:currentIndex==index}"
             @click="selected(index)">
-          <router-link :to="item.href">
+          <router-link :to="item.href" tag="a" active-class="selected">
             <span :class="[item.icon]"></span>
             <label class="item-txt" >{{item.txt}}</label>
           </router-link>
         </li>
-
-
-        <!--<li class="tab-item" :class="{ selected:currentIndex==0}">-->
-          <!--<router-link to="/home">-->
-            <!--<span class="home-icon"></span>-->
-            <!--<label class="item-txt" >首页</label>-->
-          <!--</router-link>-->
-        <!--</li>-->
-        <!--<li class="tab-item" :class="{ selected:currentIndex==1}">-->
-          <!--<router-link to="/gas">-->
-            <!--<span class="gas-icon"></span>-->
-            <!--<label class="item-txt" >加油</label>-->
-          <!--</router-link>-->
-        <!--</li>-->
-        <!--<li class="tab-item" :class="{ selected:currentIndex==2}">-->
-          <!--<router-link to="/car">-->
-            <!--<span class="car-icon"></span>-->
-            <!--<label class="item-txt">汽车服务</label>-->
-          <!--</router-link>-->
-        <!--</li>-->
-        <!--<li class="tab-item" :class="{ selected:currentIndex==3}">-->
-          <!--<router-link to="/my">-->
-            <!--<span class="my-icon"></span>-->
-            <!--<label class="item-txt">我</label>-->
-          <!--</router-link>-->
-        <!--</li>-->
       </ul>
     </div>
     <router-view></router-view>
@@ -73,24 +45,14 @@
     data: function () {
       return {
         items:arr,
-        currentIndex:getCurrentIndex(this.$route.name)
       }
     },
     methods: {
       selected: function(index) {
         console.log(index);
-        this.currentIndex = index;
       }
     }
   };
-
-  function getCurrentIndex(name){
-    for(var i=0;i<arr.length;i++){
-      if(arr[i].href==name){
-        return i;
-      }
-    }
-  }
 </script>
 
 <style>
