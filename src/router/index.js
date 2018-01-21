@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
 import Home from 'pages/home/Home'
 import Gas from 'pages/gas/Gas'
 import Car from 'pages/car/Car'
 import My from 'pages/my/My'
 
 Vue.use(Router);
+
+Vue.use(VueAwesomeSwiper);
 
 const routes = [
     {
