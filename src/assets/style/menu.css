@@ -49,17 +49,17 @@
     height: 22px;
 }
 .menu-tabs li a span.home-icon {
-    background-image: url(../menu/home.png);
+    background-image: url(../images/menu/home.png);
 }
 .menu-tabs li a span.gas-icon {
-    background-image: url(../menu/gas.png);
+    background-image: url(../images/menu/gas.png);
 }
 .menu-tabs li a span.car-icon {
-    background-image: url(../menu/car.png);
+    background-image: url(../images/menu/car.png);
 }
 
 .menu-tabs li a span.my-icon {
-    background-image: url(../menu/my.png);
+    background-image: url(../images/menu/my.png);
 }
 .menu-tabs li a label {
     font-size: 12px;
@@ -72,14 +72,14 @@
     background-color: #f3f1f1;
 }
 .menu-tabs li a.selected span.home-icon {
-    background-image: url(../menu/home@selected.png);
+    background-image: url(../images/menu/home@selected.png);
 }
 .menu-tabs li a.selected span.gas-icon {
-    background-image: url(../menu/gas@selected.png);
+    background-image: url(../images/menu/gas@selected.png);
 }
 .menu-tabs li a.selected span.car-icon {
-    background-image: url(../menu/car@selected.png);
+    background-image: url(../images/menu/car@selected.png);
 }
 .menu-tabs li a.selected span.my-icon {
-    background-image: url(../menu/my@selected.png);
+    background-image: url(../images/menu/my@selected.png);
 }

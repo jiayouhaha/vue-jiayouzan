@@ -1,15 +1,26 @@
 <template>
-  <div>my</div>
+  <div>
+    <div>my</div>
+    <div class="app-container">
+      <bind-mobile></bind-mobile>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
+  import bindMobile from '../../components/bind-mobile.vue';
+
+  export default {
+
   name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+    components: {
+      'bind-mobile': bindMobile,
+    },
+    data () {
+      return {
+        msg: 'Welcome to Your Vue.js App'
+      }
     }
-  }
 }
 </script>
 
