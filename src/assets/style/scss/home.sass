@@ -14,3 +14,43 @@
     left: 50%
     transform:translateX(-50%)
 
+.fast-link-container
+    padding: .1rem .1rem
+    @include size(100%,auto)
+    display: flex
+    flex-direction: row
+    align-items: center
+    box-sizing: border-box
+    text-decoration: none
+    background-color: #ffffff
+    .item
+      flex: 1
+      padding: .05rem 0
+      text-align: center
+      color: #333333
+      &:active
+        background-color: darken(#fff, 10%)
+
+      .item-img
+        $w: .5rem
+        img
+          @include size($w,$w)
+          border-radius: $w
+        &.no-read
+          position: relative
+          &:after
+            content: ""
+            position: absolute
+            left: 50%
+            top: 0
+            @include size(.08rem,.8tem)
+            @include r(50%)
+            transform: translate(.15rem,0)
+            display: inline-block
+            background-color: #999
+      .item-title
+        margin-top: 0.06rem
+        font-size: .14rem
+        color: #333
+  
+
