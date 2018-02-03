@@ -15,7 +15,7 @@
     </div>
     <div class="station-section">
       <div class="section-item left">
-        <img src="/assets/images/common/pay.png">
+        <span class="pay-img"></span>
         <span>支付</span>
       </div>
       <div class="section-item right">
@@ -47,5 +47,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  @import "../assets/style/scss/gasstation.sass";
+  @import "../assets/style/scss/gas-station.sass";
 </style>

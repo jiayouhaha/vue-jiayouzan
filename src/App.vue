@@ -58,6 +58,7 @@
 
 <style>
   @import "./assets/style/base.css";
+  @import "./assets/style/iconfont/iconfont.css";
   @import "./assets/style/menu.css";
   #menu-wrapper{
     height: 50px;

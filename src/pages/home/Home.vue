@@ -18,9 +18,42 @@
                 <span class="item-title">{{item.title}}</span>
             </a>
         </div>
-        <div class="top-gas-station">
+        <div class="top-gas-station margin">
             <top-gas-station :stationInfo="stationData"></top-gas-station>
         </div>
+
+        <div class="shopping-mall-container">
+            <div class="shopping-title-box">
+                <div class="title">
+                    <span class="line"></span>
+                    <div class="title-txt">热卖商品</div>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <div class="commodity-big-box">
+                <div class="commodity-box">
+                    <a v-for="item in shoppingsArr" :href="item.link" class="commodity-show-plate">
+                        <div class="commodity-img-box">
+                            <img :src="item.thumb" alt="">
+                        </div>
+                        <div class="commodity-msg-box">
+                            <div class="commodity-details">{{item.title}}</div>
+                            <div class="commodity-operation">
+                                <span class="commodity-price"><span class="commodity-price-icon">￥</span>{{item.maxprice}}</span>
+                                <span class="commodity-purchase">购买</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="commodity-load-but-box">
+                <button class="commodity-load-but">加载更多</button>
+            </div>
+        </div>
+
+
+
+        <loading-box :isActive="isActiveFlag"></loading-box>
     </div>
 </template>
 
@@ -39,6 +72,8 @@
     import {swiper,swiperSlide} from 'vue-awesome-swiper';
 
     import topGasStation from '../../components/top-gas-station.vue';
+
+    import loadingBox from '../../components/loading-box.vue';
 
     var bannerArr=[
         {
@@ -108,14 +143,27 @@
                 stationData:{
                     name:'武汉测试加油站',
                     location:'湖北省武汉市珞瑜路123号'
-                }
-
+                },
+                isActiveFlag:false,
+                shoppingsArr:[]
             }
         },
+
+        mounted: function () {
+            this.$nextTick(function () {
+                var that=this;
+                this.$http.get('../../static/shopping-goods.json').then((response) => {
+                    that.shoppingsArr = response.data;
+                });
+            });
+        },
+
+
         components: {
             'swiper':swiper,
             'swiper-slide':swiperSlide,
-            'top-gas-station':topGasStation
+            'top-gas-station':topGasStation,
+            'loading-box':loadingBox
         },
     }
 </script>
