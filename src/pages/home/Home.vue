@@ -1,28 +1,28 @@
 <template>
-    <div class="home-wrapper">
-        <div class="top-banner-container">
-            <swiper :options="swiperOptions" ref="mySwiper">
-                <swiper-slide v-for="item in bannerArr">
-                    <a :href="item.link">
-                        <img class="banner-bg" :src="item.thumb_url">
-                    </a>
-                </swiper-slide>
-            </swiper>
-            <div class="swiper-pagination"></div>
-        </div>
-        <div class="fast-link-container">
-            <a v-for="item in fastLinkArr" :href="item.link" class="item">
-                <div class="item-img">
-                    <img :src="item.img">
-                </div>
-                <span class="item-title">{{item.title}}</span>
-            </a>
-        </div>
-        <div class="top-gas-station margin">
-            <top-gas-station :stationInfo="stationData"></top-gas-station>
-        </div>
-
-        <div class="shopping-mall-container">
+    <div class="home-wrapper" >
+        <div v-show="isFirstLoadFinished">
+            <div class="top-banner-container">
+                <swiper :options="swiperOptions" ref="mySwiper">
+                    <swiper-slide v-for="item in bannerArr">
+                        <a :href="item.link">
+                            <img class="banner-bg" :src="item.thumb_url">
+                        </a>
+                    </swiper-slide>
+                </swiper>
+                <div class="swiper-pagination"></div>
+            </div>
+            <div class="fast-link-container">
+                <a v-for="item in fastLinkArr" :href="item.link" class="item">
+                    <div class="item-img">
+                        <img :src="item.img">
+                    </div>
+                    <span class="item-title">{{item.title}}</span>
+                </a>
+            </div>
+            <div class="top-gas-station margin">
+                <top-gas-station :stationInfo="stationData"></top-gas-station>
+            </div>
+            <div class="shopping-mall-container">
             <div class="shopping-title-box">
                 <div class="title">
                     <span class="line"></span>
@@ -46,12 +46,11 @@
                     </a>
                 </div>
             </div>
-            <div class="commodity-load-but-box">
+            <div class="commodity-load-but-box" @click="getMoreShopping">
                 <button class="commodity-load-but">加载更多</button>
             </div>
         </div>
-
-
+        </div>
 
         <loading-box :isActive="isActiveFlag"></loading-box>
     </div>
@@ -144,7 +143,8 @@
                     name:'武汉测试加油站',
                     location:'湖北省武汉市珞瑜路123号'
                 },
-                isActiveFlag:false,
+                isFirstLoadFinished:false,
+                isActiveFlag:true,
                 shoppingsArr:[]
             }
         },
@@ -153,6 +153,8 @@
             this.$nextTick(function () {
                 var that=this;
                 this.$http.get('../../static/shopping-goods.json').then((response) => {
+                    that.isFirstLoadFinished = true;
+                    that.isActiveFlag = false;
                     that.shoppingsArr = response.data;
                 });
             });
@@ -165,6 +167,17 @@
             'top-gas-station':topGasStation,
             'loading-box':loadingBox
         },
+
+        methods:{
+            getMoreShopping:function(event){
+                var that=this;
+                this.isActiveFlag=true;
+                this.$http.get('../../static/shopping-goods.json').then((response) => {
+                    that.isActiveFlag = false;
+                    that.shoppingsArr = that.shoppingsArr.concat(response.data);
+                });
+            }
+        }
     }
 </script>
 
