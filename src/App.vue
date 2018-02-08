@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import {flexble} from 'lib/flexible.js' //注意路径
+  import {flexble} from 'js/lib/flexible.js' //注意路径
 
   var arr=[
     {

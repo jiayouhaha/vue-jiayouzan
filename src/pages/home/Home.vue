@@ -23,33 +23,33 @@
                 <top-gas-station :stationInfo="stationData"></top-gas-station>
             </div>
             <div class="shopping-mall-container">
-            <div class="shopping-title-box">
-                <div class="title">
-                    <span class="line"></span>
-                    <div class="title-txt">热卖商品</div>
-                    <span class="line"></span>
+                <div class="shopping-title-box">
+                    <div class="title">
+                        <span class="line"></span>
+                        <div class="title-txt">热卖商品</div>
+                        <span class="line"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="commodity-big-box">
-                <div class="commodity-box">
-                    <a v-for="item in shoppingsArr" :href="item.link" class="commodity-show-plate">
-                        <div class="commodity-img-box">
-                            <img :src="item.thumb" alt="">
-                        </div>
-                        <div class="commodity-msg-box">
-                            <div class="commodity-details">{{item.title}}</div>
-                            <div class="commodity-operation">
-                                <span class="commodity-price"><span class="commodity-price-icon">￥</span>{{item.maxprice}}</span>
-                                <span class="commodity-purchase">购买</span>
+                <div class="commodity-big-box">
+                    <div class="commodity-box">
+                        <a v-for="item in shoppingsArr" :href="item.link" class="commodity-show-plate">
+                            <div class="commodity-img-box">
+                                <img :src="item.thumb" alt="">
                             </div>
-                        </div>
-                    </a>
+                            <div class="commodity-msg-box">
+                                <div class="commodity-details">{{item.title}}</div>
+                                <div class="commodity-operation">
+                                    <span class="commodity-price"><span class="commodity-price-icon">￥</span>{{item.maxprice}}</span>
+                                    <span class="commodity-purchase">购买</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="commodity-load-but-box" @click="getMoreShopping">
+                    <button class="commodity-load-but">加载更多</button>
                 </div>
             </div>
-            <div class="commodity-load-but-box" @click="getMoreShopping">
-                <button class="commodity-load-but">加载更多</button>
-            </div>
-        </div>
         </div>
 
         <loading-box :isActive="isActiveFlag"></loading-box>
@@ -157,6 +157,11 @@
                     that.isActiveFlag = false;
                     that.shoppingsArr = response.data;
                 });
+
+                this.$http.get('http://r.cn/v1/news/1/10').then((response) => {
+                    console.log(response);
+                });
+
             });
         },
 

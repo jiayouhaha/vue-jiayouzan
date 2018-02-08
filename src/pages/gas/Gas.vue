@@ -1,12 +1,8 @@
 <template>
-  <div>
-    <div style="font-size: 30px;color: red;">gas</div>
-    <swiper :options="swiperOptions" ref="mySwiper">
-        <swiper-slide v-for="item in bannerArr">
-          <img :src="item.thumb_url">
-        </swiper-slide>
-    </swiper>
-  </div>
+    <div class="gas-wrapper" >
+        <div v-show="isFirstLoadFinished"></div>
+        <loading-box :isActive="isActiveFlag"></loading-box>
+    </div>
 </template>
 
 <script>
@@ -37,28 +33,23 @@
   ];
   var stationArr=[];
   export default {
-    name: 'HelloWorld',
+    name: 'gas',
     data:function () {
       return {
-        swiperOptions:{
-          notNextTick: true,
-          // swiper configs 所有的配置同swiper官方api配置
-          autoplay: 3000,
-          // direction : 'vertical',
-//          effect:"coverflow",
-          grabCursor : true,
-          setWrapperSize :true,
-           autoHeight: true,
-           paginationType:"bullets",
-//          pagination : '.swiper-pagination',
-          paginationClickable :true,
-//          prevButton:'.swiper-button-prev',
-//          nextButton:'.swiper-button-next',
-          // scrollbar:'.swiper-scrollbar',
-//          mousewheelControl : true,
-//          observeParents:true,
-        },
-        bannerArr:bannerArr
+          swiperOptions:{
+              notNextTick: true,
+              autoplay: true,
+              grabCursor : true,
+              setWrapperSize :true,
+              autoHeight: true,
+              paginationType:"bullets",
+              paginationClickable :true,
+              pagination: {
+                  el: '.swiper-pagination'
+              }
+          },
+          bannerArr:bannerArr,
+          isActiveFlag:true,
       }
     },
     components: {
