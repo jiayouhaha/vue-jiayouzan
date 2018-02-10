@@ -4,6 +4,7 @@
 class SuperBase{
     constructor(){
         "use strict";
+        //默认时间格式化
         this._prototypeExtent();
     }
 
