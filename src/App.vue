@@ -18,6 +18,7 @@
 
 <script>
   import {flexble} from 'js/lib/flexible.js' //注意路径
+  import {config} from 'js/common/config.js' //注意路径
 
   var arr=[
     {

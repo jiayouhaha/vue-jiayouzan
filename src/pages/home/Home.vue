@@ -32,7 +32,7 @@
                 </div>
                 <div class="commodity-big-box">
                     <div class="commodity-box">
-                        <a v-for="item in shoppingsArr" :href="item.link" class="commodity-show-plate">
+                        <a v-for="item in goodsArr" :href="item.link" class="commodity-show-plate">
                             <div class="commodity-img-box">
                                 <img :src="item.thumb" alt="">
                             </div>
@@ -46,8 +46,9 @@
                         </a>
                     </div>
                 </div>
-                <div class="commodity-load-but-box" @click="getMoreShopping">
-                    <button class="commodity-load-but">加载更多</button>
+                <div class="commodity-load-but-box" @click="getMoreGoods">
+                    <button v-if="!goodsPageInfo.loadedAll" class="commodity-load-but">加载更多</button>
+                    <button v-else class="commodity-load-but disabled">已全部加载</button>
                 </div>
             </div>
         </div>
@@ -57,133 +58,125 @@
 </template>
 
 <script>
+        /*图片*/
 
-    /*图片*/
-    import banner1 from 'assets/images/home/banner@1.png'
-    import banner2 from 'assets/images/home/banner@2.png'
-    import banner3 from 'assets/images/home/banner@3.jpeg'
+        import fast1 from 'assets/images/home/park.png'
+        import fast2 from 'assets/images/home/search.png'
+        import fast3 from 'assets/images/home/activity2.png'
+        import fast4 from 'assets/images/home/insurance.png'
 
-    import fast1 from 'assets/images/home/park.png'
-    import fast2 from 'assets/images/home/search.png'
-    import fast3 from 'assets/images/home/activity2.png'
-    import fast4 from 'assets/images/home/insurance.png'
+        import {Home} from 'js/pages/home/home.js'
+        let home = new Home();
 
-    import {swiper,swiperSlide} from 'vue-awesome-swiper';
+        import {swiper,swiperSlide} from 'vue-awesome-swiper';
 
-    import topGasStation from '../../components/top-gas-station.vue';
+        import topGasStation from '../../components/top-gas-station.vue';
 
-    import loadingBox from '../../components/loading-box.vue';
+        import loadingBox from '../../components/loading-box.vue';
 
-    var bannerArr=[
-        {
-            display: 1,
-            id: 1,
-            link: "http://www.baidu.com",
-            thumb_url: banner1,
-            title: "哈哈哈1"
-        },
-        {
-            display: 1,
-            id: 2,
-            link: "http://www.baidu.com",
-            thumb_url: banner2,
-            title: "哈哈哈2"
-        },
-        {
-            display: 1,
-            id: 3,
-            link: "http://www.baidu.com",
-            thumb_url: banner3,
-            title: "哈哈哈3"
-        }
-    ];
+        var fastLinkArr=[
+            {
+                title: '停车',
+                link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
+                img:fast1
+            },
+            {
+                title: '违章代缴',
+                link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
+                img:fast2
+            },
+            {
+                title: '活动',
+                link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
+                img:fast3
+            },
+            {
+                title: '保险',
+                link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
+                img:fast4
+            }
+        ];
 
-    var fastLinkArr=[
-        {
-            title: '停车',
-            link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
-            img:fast1
-        },
-        {
-            title: '违章代缴',
-            link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
-            img:fast2
-        },
-        {
-            title: '活动',
-            link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
-            img:fast3
-        },
-        {
-            title: '保险',
-            link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
-            img:fast4
-        }
-    ];
+        export default {
+            name: 'home',
+            data: function () {
+                return {
+                    swiperOptions:{
+                        notNextTick: true,
+                        autoplay: true,
+                        grabCursor : true,
+                        setWrapperSize :true,
+                        autoHeight: true,
+                        paginationType:"bullets",
+                        paginationClickable :true,
+                        pagination: {
+                            el: '.swiper-pagination'
+                        }
+                    },
+                    fastLinkArr:fastLinkArr,
+                    stationData:{
+                        name:'武汉测试加油站',
+                        location:'湖北省武汉市珞瑜路123号'
+                    },
+                    goodsPageInfo:{
+                        size:10,
+                        index:1,
+                        loadedAll:false
+                    },
+                    isFirstLoadFinished:false,
+                    isActiveFlag:true,
+                    goodsArr:[],
+                    bannerArr:[]
+                }
+            },
 
-    export default {
-        name: 'home',
-        data: function () {
-            return {
-                swiperOptions:{
-                    notNextTick: true,
-                    autoplay: true,
-                    grabCursor : true,
-                    setWrapperSize :true,
-                    autoHeight: true,
-                    paginationType:"bullets",
-                    paginationClickable :true,
-                    pagination: {
-                        el: '.swiper-pagination'
+            mounted: function () {
+                this.$nextTick(function () {
+                    let options={
+                        goodsPageInfo:this.goodsPageInfo
+                    };
+                    home.getData(options,(res) => {
+                        this.isFirstLoadFinished = true;
+                        this.isActiveFlag = false;
+                        this.goodsPageInfo.index++;
+                        this.goodsArr = res[0].data;
+                        this.bannerArr = res[1].data;
+                    });
+                });
+            },
+
+
+            components: {
+                'swiper':swiper,
+                'swiper-slide':swiperSlide,
+                'top-gas-station':topGasStation,
+                'loading-box':loadingBox
+            },
+
+            methods:{
+                getMoreGoods:function(event){
+                    if(this.goodsPageInfo.loadedAll){
+                        return;
                     }
-                },
-                bannerArr:bannerArr,
-                fastLinkArr:fastLinkArr,
-                stationData:{
-                    name:'武汉测试加油站',
-                    location:'湖北省武汉市珞瑜路123号'
-                },
-                isFirstLoadFinished:false,
-                isActiveFlag:true,
-                shoppingsArr:[]
-            }
-        },
-
-        mounted: function () {
-            this.$nextTick(function () {
-                var that=this;
-                this.$http.get('../../static/shopping-goods.json').then((response) => {
-                    that.isFirstLoadFinished = true;
-                    that.isActiveFlag = false;
-                    that.shoppingsArr = response.data;
-                });
-
-                this.$http.get('http://r.cn/v1/news/1/10').then((response) => {
-                    console.log(response);
-                });
-
-            });
-        },
-
-
-        components: {
-            'swiper':swiper,
-            'swiper-slide':swiperSlide,
-            'top-gas-station':topGasStation,
-            'loading-box':loadingBox
-        },
-
-        methods:{
-            getMoreShopping:function(event){
-                var that=this;
-                this.isActiveFlag=true;
-                this.$http.get('../../static/shopping-goods.json').then((response) => {
-                    that.isActiveFlag = false;
-                    that.shoppingsArr = that.shoppingsArr.concat(response.data);
-                });
+                    this.isActiveFlag = true;
+                    home.getBannerData(this.goodsPageInfo,(flag,res) => {
+                        if(flag) {
+                            this.isActiveFlag = false;
+                            var newData = res.data;
+                            if (newData.length == 0 || this.goodsPageInfo.index == 5) {
+                                this.goodsPageInfo.loadedAll = true;
+                            } else {
+                                this.goodsPageInfo.index++;
+                                this.goodsArr = this.goodsArr.concat(res.data);
+                            }
+                        }else{
+                            //todo 添加一个公用的错误提示框
+                            console.log(res);
+                        }
+                    });
+                }
             }
         }
-    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
