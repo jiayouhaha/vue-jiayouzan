@@ -13,6 +13,7 @@
       </ul>
     </div>
     <router-view></router-view>
+    <div id="global-tips"><label></label></div>
   </div>
 </template>
 

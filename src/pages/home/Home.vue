@@ -16,11 +16,13 @@
                     <div class="item-img">
                         <img :src="item.img">
                     </div>
-                    <span class="item-title">{{item.title}}</span>
+                    <span class="item-title" v-html="item.title"></span>
                 </a>
             </div>
             <div class="top-gas-station margin">
-                <top-gas-station :stationInfo="stationData"></top-gas-station>
+                <top-gas-station :stationInfo="stationData" ref="topGasStation" @startNav="onNav">
+
+                </top-gas-station>
             </div>
             <div class="shopping-mall-container">
                 <div class="shopping-title-box">
@@ -51,9 +53,11 @@
                     <button v-else class="commodity-load-but disabled">已全部加载</button>
                 </div>
             </div>
+            <div class="addOil" @click="addOil">加油</div>
         </div>
 
-        <loading-box :isActive="isActiveFlag"></loading-box>
+        <loading-box :isActive="isActiveLoadingFlag"></loading-box>
+        <div id="global-tips" :class="{show:globalTipsInfo.flag}"><label>{{globalTipsInfo.tips}}</label></div>
     </div>
 </template>
 
@@ -91,7 +95,7 @@
                 img:fast3
             },
             {
-                title: '保险',
+                title: '<span style="color:red">保险</span>',
                 link:'http://www.tnar.cn/park_weixin/toquery.do?a=ce9b41b20ef97fb9db829c4c1f0ae674&c=ce9b41b20ef97fb9db829c4c1f0ae674',
                 img:fast4
             }
@@ -124,9 +128,13 @@
                         loadedAll:false
                     },
                     isFirstLoadFinished:false,
-                    isActiveFlag:true,
+                    isActiveLoadingFlag:true,
                     goodsArr:[],
-                    bannerArr:[]
+                    bannerArr:[],
+                    globalTipsInfo:{
+                        flag:false,
+                        tips:''
+                    }
                 }
             },
 
@@ -137,7 +145,7 @@
                     };
                     home.getData(options,(res) => {
                         this.isFirstLoadFinished = true;
-                        this.isActiveFlag = false;
+                        this.isActiveLoadingFlag = false;
                         this.goodsPageInfo.index++;
                         this.goodsArr = res[0].data;
                         this.bannerArr = res[1].data;
@@ -158,13 +166,15 @@
                     if(this.goodsPageInfo.loadedAll){
                         return;
                     }
-                    this.isActiveFlag = true;
+                    this.isActiveLoadingFlag = true;
                     home.getBannerData(this.goodsPageInfo,(flag,res) => {
                         if(flag) {
-                            this.isActiveFlag = false;
+                            this.isActiveLoadingFlag = false;
                             var newData = res.data;
                             if (newData.length == 0 || this.goodsPageInfo.index == 5) {
                                 this.goodsPageInfo.loadedAll = true;
+                                this.globalTipsInfo.flag = true;
+                                this.globalTipsInfo.tips = '数据加载完毕';
                             } else {
                                 this.goodsPageInfo.index++;
                                 this.goodsArr = this.goodsArr.concat(res.data);
@@ -174,6 +184,16 @@
                             console.log(res);
                         }
                     });
+                },
+
+                // 父组件调用子组件的方法 测试
+                addOil:function(){
+                    this.$refs.topGasStation.payNow("父组件请求加油");
+                },
+
+                // 子组件调用父组件的方法 测试
+                onNav:function(info){
+                    alert('导航吗？'+info);
                 }
             }
         }

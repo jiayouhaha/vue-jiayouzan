@@ -1,13 +1,12 @@
 <template>
     <div class="gas-wrapper" >
         <div v-show="isFirstLoadFinished"></div>
-        <loading-box :isActive="isActiveFlag"></loading-box>
+        <loading-box :isActive="isActiveLoadingFlag"></loading-box>
     </div>
 </template>
 
 <script>
   import {swiper,swiperSlide} from 'vue-awesome-swiper';
-
   var bannerArr=[
     {
       display: 1,
@@ -49,7 +48,8 @@
               }
           },
           bannerArr:bannerArr,
-          isActiveFlag:true,
+          isFirstLoadFinished:false,
+          isActiveLoadingFlag:true
       }
     },
     components: {

@@ -14,15 +14,17 @@
       </div>
     </div>
     <div class="station-section">
-      <div class="section-item left">
+      <div class="section-item left" @click="payNow">
         <span class="pay-img"></span>
         <span>支付</span>
       </div>
-      <div class="section-item right">
-        <a href="http://apis.map.qq.com/uri/v1/routeplan?type=drive&amp;fromcoord=30.575388756810085,114.30963859310197&amp;to=湖北省武汉市武昌区水果湖街道办事处汉街总部国际A座&amp;policy=1&amp;referer=myapp">
+      <div class="section-item right" @click="navNow">
+        <!--<a href="http://apis.map.qq.com/uri/v1/routeplan?type=drive&amp;fromcoord=30.575388756810085,114.30963859310197&amp;to=湖北省武汉市武昌区水果湖街道办事处汉街总部国际A座&amp;policy=1&amp;referer=myapp">-->
+        <div>
           <span class="iconfont icon-daohang"></span>
           <span>导航</span>
-        </a>
+        </div>
+        <!--</a>-->
       </div>
     </div>
   </div>
@@ -37,10 +39,12 @@ export default {
     }
   },
   methods:{
-//    jia:function(){
-//      console.log(this.data);
-//      this.data.a++；
-//    }
+    payNow:function(sss){
+      alert("确定加油吗？"+sss);
+    },
+    navNow:function(){
+      this.$emit('startNav','来自于子组件的请求');
+    }
   }
 }
 </script>
